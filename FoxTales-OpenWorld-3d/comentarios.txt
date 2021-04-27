@@ -1,0 +1,26 @@
+segunda milestone completa 
+Arrumar a escala dos assets; (feito)
+Fazer a escadaria dentro do farol (puzzle 1 - parkour); (feito)
+Interior de petra ( puzzle 2 - arrastar); (feito)
+Interior do templo ( puzzle 3 - arrastar); (feito)
+Interior do zigurate( puzzle 4 - parkour); (feito)
+Fazer o rio no mapa; (feito)
+Mudar o mapa ao formato da crescente fértil; (feito)
+Organizar o local das vilas; (feito)
+
+------------------------------
+Essencial:
+------------milestone 1---------------
+Cena aberta em uma ilha;
+natureza no cenário;
+2 vilas colocadas no game;
+
+implementar personagem (usar o do exemplo);
+------------milestone 2---------------
+Criar torres “shirines” q teleportam o jogador para outro level (min 4);
+Criar puzzles dentro destes leveis;
+Salvar a posição e shirine que ele entrou;
+Receber itens únicos quando completar o shirine e ou armazenar q o mesmo foi vencido;
+
+Data de Entrega: 21 de Abril, Quarta-feira.
+
