@@ -9,6 +9,12 @@ public class IAStarFPS : MonoBehaviour
     public NavMeshAgent agent;
     public Animator anim;
     public SkinnedMeshRenderer render;
+    public Vector3 patrolposition;
+    public float patrolDistance = 10;
+    public float stoppedTime;
+    public float distancetotrigger = 10;
+    public float timetowait = 3;
+    
     public enum States
     {
         pursuit,
@@ -16,6 +22,8 @@ public class IAStarFPS : MonoBehaviour
         stoped,
         dead,
         damage,
+        patrol,
+        
     }
 
     public States state;
@@ -23,7 +31,7 @@ public class IAStarFPS : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        patrolposition = new Vector3(transform.position.x + Random.Range(-patrolDistance, patrolDistance), transform.position.y, transform.position.z + Random.Range(-patrolDistance, patrolDistance));
     }
 
     // Update is called once per frame
@@ -53,6 +61,10 @@ public class IAStarFPS : MonoBehaviour
             case States.damage:
                 DamageState();
                 break;
+            case States.patrol:
+                PatrolState();
+                break;
+
         }
     }
 
@@ -65,7 +77,7 @@ public class IAStarFPS : MonoBehaviour
     {
         state = States.damage;
         Invoke("ReturnPursuit", 1);
-        StartCoroutine(ReturnDamage());
+        //StartCoroutine(ReturnDamage());
     }
     IEnumerator ReturnDamage()
     {
@@ -95,6 +107,8 @@ public class IAStarFPS : MonoBehaviour
         {
             state = States.atacking;
         }
+        if (Vector3.Distance(transform.position, target.transform.position) >= distancetotrigger)
+            Stopped();
     }
 
     void AttackState()
@@ -128,4 +142,35 @@ public class IAStarFPS : MonoBehaviour
         agent.isStopped = true;
         anim.SetBool("Damage", true);
     }
+    
+    void PatrolState()
+    {
+        agent.isStopped = false;
+        agent.SetDestination(patrolposition);
+        anim.SetBool("Attack", false);
+        //tempo parado
+        if (agent.velocity.magnitude < 0.1f)
+        {
+            stoppedTime += Time.deltaTime;
+        }
+        //se for mais q timetowait segundos
+        if (stoppedTime > timetowait)
+        {
+            stoppedTime = 0;
+            patrolposition = new Vector3(transform.position.x + Random.Range(-patrolDistance, patrolDistance), transform.position.y, transform.position.z + Random.Range(-patrolDistance, patrolDistance));
+        }
+        //ditancia do jogador for menor q distancetotrigger
+        if (Vector3.Distance(transform.position, target.transform.position) < distancetotrigger)
+        {
+            state = States.pursuit;
+        }
+    }
+    void Stopped()
+    {
+        agent.isStopped = true;
+        anim.SetBool("Attack", false);
+        state = States.patrol;
+
+    }
+
 }

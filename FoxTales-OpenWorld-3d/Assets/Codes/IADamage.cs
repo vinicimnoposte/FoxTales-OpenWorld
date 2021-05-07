@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IADamage : MonoBehaviour
 {
-    public int lives = 10;
+    public int lives = 3;
     public IAStarFPS iastar;
     // Start is called before the first frame update
     void Start()
@@ -15,7 +15,7 @@ public class IADamage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (lives < 0)
+        if (lives == 0)
         {
             iastar.Dead();
             Destroy(gameObject,4);
@@ -34,6 +34,6 @@ public class IADamage : MonoBehaviour
 
     public void ExplosionDamage()
     {
-        lives =-1;
+        lives--;
     }
 }
