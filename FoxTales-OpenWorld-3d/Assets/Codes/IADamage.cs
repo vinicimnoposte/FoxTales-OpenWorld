@@ -6,20 +6,34 @@ public class IADamage : MonoBehaviour
 {
     public int lives = 3;
     public IAStarFPS iastar;
+    public GameObject pontoFraco;
+    public GameObject estagioFinal;
+
     // Start is called before the first frame update
+
+
+
+
+
+
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (lives == 0)
         {
             iastar.Dead();
-            Destroy(gameObject,4);
+            Destroy(gameObject, 1);
         }
+        if (lives <= 50)
+            pontoFraco.SetActive(true);
+        if (lives <= 25)
+            estagioFinal.SetActive(true);
 
     }
 
@@ -30,6 +44,7 @@ public class IADamage : MonoBehaviour
             lives--;
             iastar.Damage();
         }
+        
     }
 
     public void ExplosionDamage()

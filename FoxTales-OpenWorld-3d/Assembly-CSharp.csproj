@@ -66,6 +66,7 @@
     <Compile Include="Assets\BotaoAtivar.cs" />
     <Compile Include="Assets\Codes\Blob.cs" />
     <Compile Include="Assets\Codes\Bomb.cs" />
+    <Compile Include="Assets\Codes\BossBehaviour.cs" />
     <Compile Include="Assets\Codes\CommomValues.cs" />
     <Compile Include="Assets\Codes\DayCicle.cs" />
     <Compile Include="Assets\Codes\Detection.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Assets\Codes\NPCBehaviour.cs" />
     <Compile Include="Assets\Codes\PetBehaviour.cs" />
     <Compile Include="Assets\Codes\PlayerShoot.cs" />
+    <Compile Include="Assets\Codes\PontoFRaco.cs" />
     <Compile Include="Assets\Codes\ReturnPortal.cs" />
     <Compile Include="Assets\Codes\ShrinePortal.cs" />
     <Compile Include="Assets\Codes\SwordImpact.cs" />
@@ -93,6 +95,8 @@
     <Compile Include="Assets\PuzzlePetra.cs" />
     <Compile Include="Assets\PuzzleTemplo.cs" />
     <Compile Include="Assets\PuzzleZigurate.cs" />
+    <Compile Include="Assets\StarBucks2.cs" />
+    <Compile Include="Assets\amusedART\StoneMonster\Script\Animation_Test.cs" />
     <None Include="Assets\Materials\PostProcessing.shader" />
     <None Include="Assets\Store\Boy\shader\Toony-Lighted.shader" />
     <None Include="Assets\Store\AurynSky\Rockets Missiles and Bombs\READ ME.txt" />

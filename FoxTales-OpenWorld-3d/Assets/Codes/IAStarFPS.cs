@@ -14,7 +14,11 @@ public class IAStarFPS : MonoBehaviour
     public float stoppedTime;
     public float distancetotrigger = 10;
     public float timetowait = 3;
-    
+    public GameObject pontoFraco;
+    public IADamage vidas;
+    public ParticleSystem fogao;
+
+
     public enum States
     {
         pursuit,
@@ -23,7 +27,9 @@ public class IAStarFPS : MonoBehaviour
         dead,
         damage,
         patrol,
-        
+        estagio1,
+        breath,
+
     }
 
     public States state;
@@ -64,14 +70,49 @@ public class IAStarFPS : MonoBehaviour
             case States.patrol:
                 PatrolState();
                 break;
+            case States.estagio1:
+                Estado1();
+                break;
+            case States.breath:
+                Breath();
+                break;
 
         }
+    }
+    public void Breath()
+    {
+        agent.isStopped = true;
+        anim.SetBool("Attack", true);
+        anim.SetBool("Damage", false);
+        StartCoroutine(BreathRecharge());
+        if (Vector3.Distance(transform.position, target.transform.position) > 9)
+        {
+            state = States.pursuit;
+        }
+        if (Vector3.Distance(transform.position, target.transform.position) < 3)
+        {
+            state = States.atacking;
+        }
+    }
+    IEnumerator BreathRecharge()
+    {
+        yield return new WaitForSeconds(1f);
+        ParticleSystem foguinho = Instantiate(fogao, gameObject.transform.position + gameObject.transform.forward * 2 + gameObject.transform.up, gameObject.transform.rotation);
+        foguinho.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 10;
+        Destroy(foguinho.gameObject, 1f);
+        yield return new WaitForSeconds(10f);
     }
 
     void ReturnPursuit()
     {
         state = States.pursuit;
        
+    }
+    public void Estado1()
+    {
+        if (vidas.lives <= 10)
+            pontoFraco.SetActive(true);
+
     }
     public void Damage()
     {
@@ -103,12 +144,12 @@ public class IAStarFPS : MonoBehaviour
         agent.destination = target.transform.position;
         anim.SetBool("Attack", false);
         anim.SetBool("Damage", false);
-        if (Vector3.Distance(transform.position, target.transform.position) < 3)
+        if (Vector3.Distance(transform.position, target.transform.position) < 5)
         {
-            state = States.atacking;
+            state = States.breath;
         }
         if (Vector3.Distance(transform.position, target.transform.position) >= distancetotrigger)
-            Stopped();
+            state = States.patrol;
     }
 
     void AttackState()
@@ -118,7 +159,7 @@ public class IAStarFPS : MonoBehaviour
         anim.SetBool("Damage", false);
         if (Vector3.Distance(transform.position, target.transform.position) > 4)
         {
-            state = States.pursuit;
+            state = States.breath;
         }
     }
 
@@ -152,6 +193,7 @@ public class IAStarFPS : MonoBehaviour
         if (agent.velocity.magnitude < 0.1f)
         {
             stoppedTime += Time.deltaTime;
+            
         }
         //se for mais q timetowait segundos
         if (stoppedTime > timetowait)
